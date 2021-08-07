@@ -54,6 +54,9 @@ public class Account extends AbstractVersion {
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private boolean active = Boolean.FALSE;
+    
+    @Column(name = "IS_VERIFIED", nullable = false)
+    private boolean verified = Boolean.FALSE;
 
     @Column(name = "IMAGE_PATH")
     private String imagePath;
