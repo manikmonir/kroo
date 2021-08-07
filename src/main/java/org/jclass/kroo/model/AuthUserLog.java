@@ -1,13 +1,14 @@
 package org.jclass.kroo.model;
 
-/**
- *
- * @author Manik
- */
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ *
+ * @author Manik
+ */
 
 @Data
 @NoArgsConstructor

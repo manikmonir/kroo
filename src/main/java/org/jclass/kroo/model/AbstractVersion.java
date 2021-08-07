@@ -1,11 +1,12 @@
 package org.jclass.kroo.model;
 
+import lombok.Data;
+import javax.persistence.*;
+
 /**
  *
  * @author Manik
  */
-import lombok.Data;
-import javax.persistence.*;
 
 @Data
 @MappedSuperclass

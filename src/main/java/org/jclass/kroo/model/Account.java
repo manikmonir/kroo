@@ -1,14 +1,15 @@
 package org.jclass.kroo.model;
 
-/**
- *
- * @author Manik
- */
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+/**
+ *
+ * @author Manik
+ */
 
 @Data
 @NoArgsConstructor
@@ -35,7 +36,7 @@ public class Account extends AbstractVersion {
 
     @JoinColumn(name = "ZIP_CODE_ID", nullable = false)
     @ManyToOne(optional = false)
-    private ZipCode zipCode;
+    private Zip zipCode;
 
     @Email
     @Column(length = 50, unique = true)

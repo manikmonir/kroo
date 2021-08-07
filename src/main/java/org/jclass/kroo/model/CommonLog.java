@@ -1,14 +1,14 @@
 package org.jclass.kroo.model;
-
-/**
- *
- * @author Manik
- */
 import java.time.LocalDateTime;
 //import org.postgis.Point;
 import javax.persistence.*;
 import lombok.Data;
 import org.springframework.data.geo.Point;
+
+/**
+ *
+ * @author Manik
+ */
 
 @Data
 @MappedSuperclass

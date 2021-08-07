@@ -1,9 +1,5 @@
 package org.jclass.kroo.model;
 
-/**
- *
- * @author Manik
- */
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 //import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +7,11 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+/**
+ *
+ * @author Manik
+ */
 
 @Data
 @NoArgsConstructor

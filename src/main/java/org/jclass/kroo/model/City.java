@@ -1,15 +1,16 @@
 package org.jclass.kroo.model;
 
-/**
- *
- * @author Manik
- */
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ *
+ * @author Manik
+ */
 
 @Data
 @NoArgsConstructor
@@ -21,8 +22,8 @@ public class City extends AbstractVersion {
     @Embedded
     private Nameable nameable;
 
-    @OneToMany(mappedBy = "city")
-    @OrderBy(value = "code")
-    private List<ZipCode> zipCodes = new ArrayList();
+    @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
+    //@OrderBy(value = "code")
+    private List<Zip> zips = new ArrayList();
 
 }

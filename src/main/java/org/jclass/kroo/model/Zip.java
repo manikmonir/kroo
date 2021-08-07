@@ -1,22 +1,23 @@
 package org.jclass.kroo.model;
 
-/**
- *
- * @author Manik
- */
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * @author Manik
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ZIP_CODE")
-public class ZipCode extends Abstract {//no need version field
+@Table(name = "ZIP")
+public class Zip extends Abstract {//no need version field
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10, nullable = false, unique = true)
     private String code;
 
     @Embedded

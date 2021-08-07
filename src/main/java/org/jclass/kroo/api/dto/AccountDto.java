@@ -1,11 +1,12 @@
 package org.jclass.kroo.api.dto;
 
-/**
- *
- * @author Manik
- */
 import java.io.Serializable;
 import lombok.*;
+
+/**
+ *
+ * @author  Manik
+ */
 
 @Data
 @NoArgsConstructor
@@ -23,8 +24,6 @@ public class AccountDto implements Serializable {
     private long zipId;
 
     private String email;
-
-    private long interests[];
 
     private String password;
 
