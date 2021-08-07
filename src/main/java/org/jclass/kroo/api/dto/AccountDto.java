@@ -19,9 +19,9 @@ public class AccountDto implements Serializable {
 
     private String lastName;
 
-    private long cityId;
+    private Long cityId;
 
-    private long zipId;
+    private Long zipId;
 
     private String email;
 

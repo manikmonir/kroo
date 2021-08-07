@@ -15,6 +15,6 @@ public class AccountInterestDto implements Serializable {
 
     private String mobileNo;
 
-    private long interests[];
+    private Long interests[];
 
 }

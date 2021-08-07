@@ -11,6 +11,6 @@ import lombok.Data;
 //only active records
 public abstract class BaseDto implements Serializable {
 
-    private long id;
+    private Long id;
     private String name;
 }

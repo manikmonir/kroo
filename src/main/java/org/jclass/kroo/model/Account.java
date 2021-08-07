@@ -1,16 +1,17 @@
 package org.jclass.kroo.model;
 
+import java.util.ArrayList;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  *
  * @author Manik
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,9 +35,9 @@ public class Account extends AbstractVersion {
     @ManyToOne(optional = false)
     private City city;
 
-    @JoinColumn(name = "ZIP_CODE_ID", nullable = false)
+    @JoinColumn(name = "ZIP_ID", nullable = false)
     @ManyToOne(optional = false)
-    private Zip zipCode;
+    private Zip zip;
 
     @Email
     @Column(length = 50, unique = true)
@@ -51,11 +52,11 @@ public class Account extends AbstractVersion {
                 @JoinColumn(name = "ACCOUNT_ID", nullable = false)},
             inverseJoinColumns = {
                 @JoinColumn(name = "INTEREST_ID", nullable = false)})
-    private Set<Interest> interests = new LinkedHashSet<>();
+    private List<Interest> interests = new ArrayList<>();
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private boolean active = Boolean.FALSE;
-    
+
     @Column(name = "IS_VERIFIED", nullable = false)
     private boolean verified = Boolean.FALSE;
 

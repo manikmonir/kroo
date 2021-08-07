@@ -35,14 +35,14 @@ public class AccountApi {
         return accountService.verify(verificationCode, mobileNo, deviceId);
     }
 
-    @PostMapping("/createProfile")
-    public ResponseDto createProfile(@RequestBody AccountDto obj) {
-        return accountService.createProfile(obj);
+    @PostMapping("/updateProfile")
+    public ResponseDto updateProfile(@RequestBody AccountDto obj) {
+        return accountService.updateProfile(obj);
     }
 
-    @PostMapping("/createAccountInterest")
-    public ResponseDto createAccountInterest(@RequestBody AccountInterestDto obj) {
-        return accountService.createAccountInterest(obj);
+    @PostMapping("/updateAccountInterest")
+    public ResponseDto updateAccountInterest(@RequestBody AccountInterestDto obj) {
+        return accountService.updateAccountInterest(obj);
     }
 
     @PostMapping("/login")
