@@ -1,21 +1,19 @@
 package org.jclass.kroo.api.endpoint;
 
+import java.util.Map;
 import org.jclass.kroo.api.dto.AccountDto;
 import org.jclass.kroo.api.dto.AccountInterestDto;
-import org.jclass.kroo.api.dto.ResponseDto;
 import org.jclass.kroo.api.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Manik
  */
-
 @RestController
 @RequestMapping("/api/account")
 public class AccountApi {
@@ -24,39 +22,42 @@ public class AccountApi {
     private AccountService accountService;
 
     @PostMapping("/init")
-    public ResponseDto init(@RequestParam String mobileNo, @RequestParam String deviceId) {
+    public Map<String, Object> init(@RequestBody Map<String, Object> map) {
         //send sms to given mobile no
-        return accountService.init(mobileNo, deviceId);
+        return accountService.init(map);
     }
 
     @PostMapping("/verify")
-    public ResponseDto verify(@RequestParam String verificationCode, @RequestParam String mobileNo, @RequestParam String deviceId) {
+    public Map<String, Object> verify(@RequestBody Map<String, Object> map) {
         //get verificationCode and match if match OK,
-        return accountService.verify(verificationCode, mobileNo, deviceId);
+        return accountService.verify(map);
     }
 
     @PostMapping("/updateProfile")
-    public ResponseDto updateProfile(@RequestBody AccountDto obj) {
+    public Map<String, Object> updateProfile(@RequestBody AccountDto obj) {
         return accountService.updateProfile(obj);
     }
 
     @PostMapping("/updateAccountInterest")
-    public ResponseDto updateAccountInterest(@RequestBody AccountInterestDto obj) {
+    public Map<String, Object> updateAccountInterest(@RequestBody AccountInterestDto obj) {
         return accountService.updateAccountInterest(obj);
     }
 
     @PostMapping("/login")
-    public ResponseDto login(@RequestParam String loginId, @RequestParam String password) {
+    public Map<String, Object> login(@RequestBody Map<String, Object> map) {
         //loginId is mobile no or email
-        return accountService.login(loginId, password);
+        System.out.println("login: " + map);
+        return accountService.login(map);
     }
 
     @PostMapping("/logout")
-    public ResponseDto logout(@RequestParam String loginId) {
+    public Map<String, Object> logout(@RequestBody Map<String, Object> map) {
+
+        System.out.println("logout: " + map);
         //loginId is mobile no or email
-        return accountService.logout(loginId);
+        return accountService.logout(map);
     }
-    
+
 //    @PutMapping("/updateProfile")
 //    public ResponseDto updateProfile(@RequestBody AccountDto obj) {
 //        return accountService.updateProfile(obj);

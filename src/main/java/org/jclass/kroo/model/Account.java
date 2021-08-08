@@ -1,11 +1,9 @@
 package org.jclass.kroo.model;
 
-import java.util.ArrayList;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,18 +23,18 @@ public class Account extends AbstractVersion {
     @Column(name = "VERIFICATION_CODE", length = 6, nullable = false)
     private String verificationCode;
 
-    @Column(name = "FIRST_NAME", length = 35, nullable = false)
+    @Column(name = "FIRST_NAME", length = 35, nullable = true)
     private String firstName;
 
-    @Column(name = "LAST_NAME", length = 35, nullable = false)
+    @Column(name = "LAST_NAME", length = 35, nullable = true)
     private String lastName;
 
-    @JoinColumn(name = "CITY_ID", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "CITY_ID", nullable = true)
+    @ManyToOne(optional = true)
     private City city;
 
-    @JoinColumn(name = "ZIP_ID", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "ZIP_ID", nullable = true)
+    @ManyToOne(optional = true)
     private Zip zip;
 
     @Email
@@ -52,7 +50,7 @@ public class Account extends AbstractVersion {
                 @JoinColumn(name = "ACCOUNT_ID", nullable = false)},
             inverseJoinColumns = {
                 @JoinColumn(name = "INTEREST_ID", nullable = false)})
-    private List<Interest> interests = new ArrayList<>();
+    private Set<Interest> interests = new LinkedHashSet<>();
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private boolean active = Boolean.FALSE;
@@ -66,7 +64,7 @@ public class Account extends AbstractVersion {
     @Column(name = "PASSWORD_HASH", length = 64)
     private String passwordHash;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 64, nullable = true)
     private String password;
 
 }

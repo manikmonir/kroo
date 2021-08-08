@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 public class AccountDto implements Serializable {
 
-    private String mobileNo;
+    private Long uid;
 
     private String firstName;
 

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
  *
  * @author Manik
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +22,12 @@ public class Interest extends AbstractVersion {
     @Column(name = "IMAGE_PATH", nullable = false)
     private String imagePath;
 
+    public boolean equals(Object aa) {
+
+        if (aa != null && aa instanceof Interest) {
+            return this.getId().equals(((Interest) aa).getId());
+        } else {
+            return false;
+        }
+    }
 }

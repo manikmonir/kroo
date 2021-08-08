@@ -1,10 +1,13 @@
 package org.jclass.kroo.api.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import org.jclass.kroo.api.dto.AccountDto;
 import org.jclass.kroo.api.dto.AccountInterestDto;
-import org.jclass.kroo.api.dto.ResponseDto;
 import org.jclass.kroo.model.Account;
 import org.jclass.kroo.model.Interest;
 import org.jclass.kroo.repo.*;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountService {
+
+    private Map<String, String> sessionMap = new HashMap();
 
     @Autowired
     private AccountRepo accountRepo;
@@ -38,11 +43,13 @@ public class AccountService {
         return mob;
     }
 
-    public ResponseDto init(String mobileNo, String deviceId) {
-        String mob = refineMobileNo(mobileNo);
+    public Map<String, Object> init(Map<String, Object> map) {
+//    public Map<String,Object> init(String mobileNo, String deviceId) {
+        String mob = refineMobileNo((String) map.get("mobileNo"));
+        String deviceId = (String) map.get("deviceId");
 
         if (mob.length() < 10) {
-            return new ResponseDto("Invalid Mobile No", "ERROR");
+            return getReady("status", "ERROR", "message", "Invalid mobile no");
         }
 
         Account acc = accountRepo.findByMobileNo(mob);
@@ -57,40 +64,38 @@ public class AccountService {
         acc.setVerificationCode(ns + "");
 
         Account saved = accountRepo.save(acc);
-        System.out.println("Verification Code " + ns + " for mobile no: " + mob);
-        return new ResponseDto("Created", "OK");
+        System.out.println("send Code " + ns + " to mobile no: " + mob);
+        //System.out.println("Verification Code " + ns + " for mobile no: " + mob);
+
+        return getReady("status", "OK", "message", "Created", "uid", saved.getId());
     }
 
-    public ResponseDto verify(String verificationCode, String mobileNo, String deviceId) {
+    public Map<String, Object> verify(Map<String, Object> map) {
+//    public Map<String,Object> verify(String verificationCode, String mobileNo, String deviceId) {
 
-        String mob = refineMobileNo(mobileNo);
-
-        if (mob.length() < 10) {
-            return new ResponseDto("Invalid Mobile No", "ERROR");
-        }
+        long uid = Long.parseLong((String) map.get("uid"));
+        String verificationCode = (String) map.get("verificationCode");
 
         if (verificationCode.length() != 6) {
-            return new ResponseDto("Invalid Verification Code", "ERROR");
+            return getReady("status", "ERROR", "message", "Invalid Verification Code");
         }
 
-        Account acc = accountRepo.findByMobileNo(mob);
+        Account acc = accountRepo.findById(uid).get();
 
         if (acc.getVerificationCode().equals(verificationCode)) {
             acc.setVerified(true);
             Account saved = accountRepo.save(acc);
 
-            return new ResponseDto("Updated", "OK");
+            return getReady("status", "OK", "message", "Update");
+
         } else {
-            return new ResponseDto("Wrong Verification Code", "ERROR");
+            return getReady("status", "ERROR", "message", "Wrong Verification Code");
         }
     }
 
-    //gen verification code, and varify
-    public ResponseDto updateProfile(AccountDto obj) {
+    public Map<String, Object> updateProfile(AccountDto obj) {
 
-        String mob = refineMobileNo(obj.getMobileNo());
-
-        Account acc = accountRepo.findByMobileNo(mob);
+        Account acc = accountRepo.findById(obj.getUid()).get();
 
         acc.setFirstName(obj.getFirstName());
         acc.setLastName(obj.getLastName());
@@ -101,40 +106,50 @@ public class AccountService {
         acc.setZip(zipRepo.findById(obj.getZipId()).get());
         Account saved = accountRepo.save(acc);
 
-        return new ResponseDto("Updated", "OK");
+        return getReady("status", "OK", "message", "Update");
     }
 
-    public ResponseDto updateAccountInterest(AccountInterestDto obj) {
+    public Map<String, Object> updateAccountInterest(AccountInterestDto obj) {
 
-        String mob = refineMobileNo(obj.getMobileNo());
-
-        Account acc = accountRepo.findByMobileNo(mob);
+        Account acc = accountRepo.findById(obj.getUid()).get();
 
         List<Interest> interests = interestRepo.findAllById(Arrays.asList(obj.getInterests()));
 
-        acc.setInterests(interests);
+        acc.setInterests(new LinkedHashSet<>(interests));
 
         Account saved = accountRepo.save(acc);
 
-        return new ResponseDto("Updated", "OK");
+        return getReady("status", "OK", "message", "Update");
     }
 
-    public ResponseDto login(String loginId, String password) {
+    public Map<String, Object> login(Map<String, Object> map) {
+//    public Map<String, Object> login(String loginId, String password) {
+        Account acc = accountRepo.findForLogin((String) map.get("loginId"));
 
-        Account acc = accountRepo.findForLogin(loginId);
+        if (acc != null && acc.getPassword().equals((String) map.get("password"))) {
+            String token = UUID.randomUUID().toString();
 
-        if (acc.getPassword().equals(password)) {
-            return new ResponseDto("Updated", "OK");
+            sessionMap.put(token, acc.getId() + "");
+
+            return getReady("status", "OK", "message", "Successful", "uid", acc.getId(), "email", acc.getEmail(), "token", token);
 
         } else {
-            return new ResponseDto("Can not login", "ERROR");
-
+            return getReady("status", "ERROR", "message", "Can not login");
         }
-
     }
 
-    public ResponseDto logout(String loginId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Map<String, Object> logout(Map<String, Object> map) {
+        String remove = sessionMap.remove(map.get("token"));
+        System.out.println("logout: " + remove);
+        return getReady("status", "OK", "message", "Logout");
     }
 
+    private Map<String, Object> getReady(Object... arg) {
+        Map<String, Object> mapx = new HashMap();
+        for (int i = 0; i < arg.length; i += 2) {
+            mapx.put((String) arg[i], arg[i + 1]);
+        }
+        System.out.println("sohwo b4 send" + mapx);
+        return mapx;
+    }
 }
