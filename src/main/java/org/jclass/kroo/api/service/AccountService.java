@@ -67,7 +67,8 @@ public class AccountService {
         System.out.println("send Code " + ns + " to mobile no: " + mob);
         //System.out.println("Verification Code " + ns + " for mobile no: " + mob);
 
-        return getReady("status", "OK", "message", "Created", "uid", saved.getId());
+        return getReady("status", "OK", "message", "Created", 
+                "uid", saved.getId(),"isNeedVerify",!saved.isVerified());
     }
 
     public Map<String, Object> verify(Map<String, Object> map) {

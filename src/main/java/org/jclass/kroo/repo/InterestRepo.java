@@ -10,12 +10,10 @@ import org.springframework.stereotype.Repository;
  *
  * @author Manik
  */
-
 @Repository
 public interface InterestRepo extends JpaRepository<Interest, Long> {
 
-      @Query("SELECT m FROM Interest m WHERE m.nameable.active = true order by m.nameable.slNo, m.nameable.name")
-  
+    @Query("SELECT m FROM Interest m WHERE m.active = true order by m.slNo, m.name")
     List<Interest> findAllCustom();
 
 }

@@ -1,5 +1,6 @@
 package org.jclass.kroo.api.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,5 @@ import lombok.NoArgsConstructor;
 //only active records
 public class CityDto extends BaseDto {
 
-    private ZipDto zips[];
+    private List<BaseDto> zips;
 }

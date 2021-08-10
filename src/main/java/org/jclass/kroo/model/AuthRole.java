@@ -7,7 +7,6 @@ import javax.persistence.*;
  *
  * @author Manik
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +17,13 @@ public class AuthRole extends AbstractVersion {
     @Column(unique = true, length = 30)//ADMIN, USER
     private String code;
 
-    @Embedded
-    private Nameable nameable;
+    @Column(length = 100, nullable = false, unique = true)
+    private String name;
+
+    @Column(name = "IS_ACTIVE", nullable = false)
+    private boolean active = Boolean.TRUE;
+
+    @Column(name = "SL_NO")
+    private Integer slNo;
 
 }

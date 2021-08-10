@@ -28,7 +28,8 @@ public class InterestService {
 
         for (Interest Interest : interests) {
             InterestDto interestDto = new InterestDto();
-            interestDto.setName(Interest.getNameable().getName());
+            interestDto.setValue(Interest.getId());
+            interestDto.setLabel(Interest.getName());
             interestDto.setImageUrl(Interest.getImagePath());
             interestDtos.add(interestDto);
         }

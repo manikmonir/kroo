@@ -20,9 +20,15 @@ public class Zip extends Abstract {//no need version field
     @Column(length = 10, nullable = false, unique = true)
     private String code;
 
-    @Embedded
-    private Nameable nameable;
+    @Column(length = 100, nullable = false, unique = true)
+    private String name;
 
+    @Column(name = "IS_ACTIVE", nullable = false)
+    private boolean active = Boolean.TRUE;
+
+    @Column(name = "SL_NO")
+    private Integer slNo;
+    
     @JoinColumn(name = "CITY_ID", nullable = false)
     @ManyToOne(optional = false)
     private City city;

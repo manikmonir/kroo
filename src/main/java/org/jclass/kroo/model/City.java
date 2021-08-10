@@ -19,8 +19,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "CITY")
 public class City extends AbstractVersion {
 
-    @Embedded
-    private Nameable nameable;
+    
+    @Column(length = 100, nullable = false, unique = true)
+    private String name;
+
+    @Column(name = "IS_ACTIVE", nullable = false)
+    private boolean active = Boolean.TRUE;
+
+    @Column(name = "SL_NO")
+    private Integer slNo;
 
     @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
     //@OrderBy(value = "code")

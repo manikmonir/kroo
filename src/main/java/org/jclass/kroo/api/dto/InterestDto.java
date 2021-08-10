@@ -15,5 +15,7 @@ import lombok.NoArgsConstructor;
 //only active records
 public class InterestDto extends BaseDto {
 
+      private Long value;
+    private String label;
     private String imageUrl;
 }
