@@ -132,7 +132,10 @@ public class AccountService {
 
             sessionMap.put(token, acc.getId() + "");
 
-            return getReady("status", "OK", "message", "Successful", "uid", acc.getId(), "email", acc.getEmail(), "token", token);
+            return getReady("status", "OK", "message", "Successful", 
+                    "uid", acc.getId().toString(), "email", acc.getEmail(),
+                    "fullName", (acc.getFirstName()+" "+acc.getLastName()).toUpperCase(),
+                    "token", token);
 
         } else {
             return getReady("status", "ERROR", "message", "Can not login");
